@@ -15,3 +15,7 @@ class Node:
 				return neighbour
 
 		return False
+
+	def delete_neighbour(self, neighbour):
+		if (neighbour in self.neighbours):
+			self.neighbours.remove(neighbour)

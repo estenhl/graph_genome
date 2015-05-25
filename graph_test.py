@@ -1,5 +1,5 @@
 from node import Node
-from graph import Graph, get_linear_sequence, map_global_alignment_to_graph
+from graph import *
 
 completed_tests = 0
 failed_tests = 0
@@ -31,6 +31,9 @@ assert_equal(1, len(node.neighbours))
 graph = Graph('test', 'ACTGGCTAGAAGCGCGCT')
 assert_equal('test', graph.name)
 assert_equal('ACTGGCTAGAAGCGCGCT', get_linear_sequence(graph))
+print(get_all_sequences(graph))
+assert_equal(1, len(get_all_sequences(graph)))
+assert_equal('ACTGGCTAGAAGCGCGCT', get_all_sequences(graph)[0])
 
 node1 = graph.head.neighbours[0]
 node2 = node1.neighbours[0]
@@ -44,4 +47,13 @@ assert_equal('G', node4.value)
 
 assert_equal([node1, node2, node3, node4], map_global_alignment_to_graph('ACTG', graph))
 assert_equal([node1, node2, None, None, node3], map_global_alignment_to_graph('AC--T', graph))
+
+graph1 = Graph('test', 'ACCT')
+graph2 = Graph('test', 'ACGT')
+graph3 = Graph('test', 'ACTCT')
+graph4 = Graph('test', 'ACT')
+merged = merge_from_alignments(graph1, graph2, 'ACCT', 'ACGT')
+merged = merge_from_alignments(merged, graph3, 'AC-CT', 'ACTCT')
+merged = merge_from_alignments(merged, graph4, 'ACCT', 'AC-T')
+print(get_all_sequences(merged))
 		
