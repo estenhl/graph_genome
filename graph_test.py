@@ -1,5 +1,5 @@
 from node import Node
-from graph import Graph, get_linear_sequence
+from graph import Graph, get_linear_sequence, map_global_alignment_to_graph
 
 completed_tests = 0
 failed_tests = 0
@@ -22,9 +22,26 @@ def assert_equal(expected, received):
 # Node unit tests
 node = Node('A')
 assert_equal('A', node.value)
+node2 = Node('T')
+node.add_neighbour(node2)
+node.add_neighbour(node2)
+assert_equal(1, len(node.neighbours))
 
 # Graph unit tests
 graph = Graph('test', 'ACTGGCTAGAAGCGCGCT')
 assert_equal('test', graph.name)
 assert_equal('ACTGGCTAGAAGCGCGCT', get_linear_sequence(graph))
+
+node1 = graph.head.neighbours[0]
+node2 = node1.neighbours[0]
+node3 = node2.neighbours[0]
+node4 = node3.neighbours[0]
+
+assert_equal('A', node1.value)
+assert_equal('C', node2.value)
+assert_equal('T', node3.value)
+assert_equal('G', node4.value)
+
+assert_equal([node1, node2, node3, node4], map_global_alignment_to_graph('ACTG', graph))
+assert_equal([node1, node2, None, None, node3], map_global_alignment_to_graph('AC--T', graph))
 		
