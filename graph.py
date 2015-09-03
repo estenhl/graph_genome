@@ -29,7 +29,6 @@ def get_all_sequences(graph):
 			paths.append(s)
 			return paths
 		else:
-			print('In node: ' + node.value + ', neighbours: ' + str(len(node.neighbours)))
 			for neighbour in node.neighbours:
 				get_all_sequences_rec(neighbour, s + node.value, paths)
 
@@ -63,9 +62,6 @@ def map_global_alignment_to_graph(alignment, graph):
 def merge_from_alignments(graph1, graph2, alignment1, alignment2):
 	seq1 = map_global_alignment_to_graph(alignment1, graph1)
 	seq2 = map_global_alignment_to_graph(alignment2, graph2)
-
-	print(seq1)
-	print(seq2)
 
 	if (not seq1):
 		print('Unable to merge from invalid alignment 1')
